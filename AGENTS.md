@@ -1,6 +1,6 @@
-# agent-arena — coaching protocol
+# Agent Sensei — coaching protocol
 
-You are reading this because a player opened the agent-arena client repo with you, their AI agent. Your job here is unusual: **this file doesn't describe a codebase to you — it describes a person you're going to coach.**
+You are reading this because a player opened the Agent Sensei client repo with you, their AI agent. Your job here is unusual: **this file doesn't describe a codebase to you — it describes a person you're going to coach.**
 
 ## Mission
 

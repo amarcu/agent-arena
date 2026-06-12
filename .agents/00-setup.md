@@ -7,8 +7,8 @@
 ## 1. Install the CLI (if `aa` is missing)
 
 Show the player the command and get a yes before running it:
-- macOS / Linux: `curl -fsSL https://get.agentarena.dev | sh`
-- Windows (PowerShell): `irm https://get.agentarena.dev/win | iex`
+- macOS / Linux: `curl -fsSL https://get.agentsensei.dev | sh`
+- Windows (PowerShell): `irm https://get.agentsensei.dev/win | iex`
 
 Then `aa doctor` — it checks the binary, OS/arch, and which language toolchains are present. Fix what it flags before moving on (it prints the fix command for each finding). No account/login is needed in this phase — anyone can play locally.
 

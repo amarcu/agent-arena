@@ -1,0 +1,2 @@
+# This directory holds your bot after you run `aa init --lang <python|typescript|go|rust|cpp>`.
+# It starts empty on purpose — `aa init` scaffolds a working starter ant here.

@@ -1,6 +1,6 @@
 # Phase: First bot
 
-**Goal:** the player understands the template and beats the baseline bot. **Exit criteria:** ≥ 60% win rate over `aa match --against baseline --n 20`.
+**Goal:** the player understands the template and beats the baseline bot. **Exit criteria:** ≥ 60% win rate over `sensei match --against baseline --n 20`.
 
 ## 1. Tour the template (5 minutes, not 30 — in peer mode, one sentence and the file path)
 
@@ -26,14 +26,14 @@ Step 1 → 2 is usually enough to beat the baseline. Let the player implement; r
 ## 3. Measure every change
 
 ```sh
-aa match --against baseline --n 20 --json
+sensei match --against baseline --n 20 --json
 ```
 
 Quote win rates before/after each change. Use a fixed `--seed` while debugging a specific situation (deterministic reruns), and the `--n 20` spread to judge real improvement. Watch a *lost* replay together when stuck — losses teach more than wins.
 
 ## Common first-bot failures
 
-- **Timeouts:** `decide` has a per-ant deadline (a few ms). BFS over a 30×30 grid is fine; BFS *per food per ant per turn* without caching may not be. `aa logs` shows per-call timing.
+- **Timeouts:** `decide` has a per-ant deadline (a few ms). BFS over a 30×30 grid is fine; BFS *per food per ant per turn* without caching may not be. `sensei logs` shows per-call timing.
 - **Invalid actions** (engine warns, treats as `wait`): usually a malformed direction or planting with a bad TTL — check shapes in `game-cheatsheet.md`.
 - **The ant-mill:** ants oscillating A→B→A forever. Stateless ants can't "remember" they just came from B — break ties deterministically (e.g., prefer the direction that reduces distance; on exact ties, order N>E>S>W by `ant_id` parity so two ants tie-break differently).
 

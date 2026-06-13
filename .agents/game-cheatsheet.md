@@ -45,4 +45,4 @@ Practical consequences: a doomed ant can't eat first (combat resolves before fee
 
 - **Per-ant deadline (50 ms) + per-turn colony budget (1000 ms):** a slow `decide` makes that ant `wait`; once your colony's summed think-time crosses the turn budget, the REST of your ants wait too. **Design consequence: many ants must be cheap ants** — a big colony running heavy per-ant logic starves itself. Cache shared computations once per turn, or use `move_to` so the engine does the pathfinding for free. Exact limits arrive in `init`.
 - **Finite food is the growth ceiling:** food never regenerates and each food = exactly one new ant, so the food map is both the battleground and the population cap. (Some leagues may add an explicit `pop_cap`; the default ladder doesn't.)
-- **stderr is yours** (debug logs, shown by `aa logs`); **stdout belongs to the protocol** — the template's `log()` does the right thing.
+- **stderr is yours** (debug logs, shown by `sensei logs`); **stdout belongs to the protocol** — the template's `log()` does the right thing.

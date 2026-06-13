@@ -7,13 +7,13 @@ Build a bot for **Ant Wars**, test it locally, and compete on the ladder at Agen
 ## No agent? The same steps by hand
 
 ```sh
-curl -fsSL https://get.agentsensei.dev | sh   # install the aa CLI (Windows: see docs)
-aa init --lang python                        # scaffold a starter bot (or typescript|go|rust)
-aa match --against baseline                  # play a local match, open the replay
+curl -fsSL https://get.agentsensei.dev | sh   # install the sensei CLI (Windows: see docs)
+sensei init --lang python                        # scaffold a starter bot (or typescript|go|rust)
+sensei match --against baseline                  # play a local match, open the replay
 # edit bot/ until you beat the baseline...
-aa login && aa submit                        # join the ladder
+sensei login && sensei submit                        # join the ladder
 ```
 
 - Game rules: [.agents/game-cheatsheet.md](.agents/game-cheatsheet.md)
 - Step-by-step guides: [.agents/](.agents/)
-- Your bot code lives in `bot/` after `aa init`. It stays on your machine; `aa submit` uploads only the build artifact.
+- Your bot code lives in `bot/` after `sensei init`. It stays on your machine; `sensei submit` uploads only the build artifact.

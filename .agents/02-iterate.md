@@ -6,8 +6,8 @@
 
 1. **Watch losses.** Pull 2–3 lost replays from the ladder (or local self-play). Name the *pattern* of the loss, not the moment ("we lose food races on the right flank," not "turn 41 was bad").
 2. **One hypothesis, one change.** Smallest edit that addresses the pattern.
-3. **Measure:** `aa match --against baseline --n 20 --json` *and* self-play vs the previous version — `aa match --against <path-to-old-bot> --n 20`. Keep the old version around (suggest the player commit before each experiment; this is a good habit to model anyway).
-4. **Keep or revert based on the number, not the vibe.** Then submit when a change survives both gauntlets: `aa submit`.
+3. **Measure:** `sensei match --against baseline --n 20 --json` *and* self-play vs the previous version — `sensei match --against <path-to-old-bot> --n 20`. Keep the old version around (suggest the player commit before each experiment; this is a good habit to model anyway).
+4. **Keep or revert based on the number, not the vibe.** Then submit when a change survives both gauntlets: `sensei submit`.
 
 ## Strategy ladder (rough order of returns)
 

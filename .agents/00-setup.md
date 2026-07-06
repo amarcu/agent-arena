@@ -1,8 +1,8 @@
 # Phase: Setup
 
-**Goal:** working `sensei` CLI + a scaffolded bot in the player's language. **Exit criteria:** `sensei match --against random` completes and the player has watched the replay.
+**Goal:** working `sensei` CLI + a scaffolded bot in the player's language + the working habits armed. **Exit criteria:** `sensei match --against random` completes, the player has watched the replay, and the repo is a git repo with a first commit.
 
-(Peer mode: this whole phase compresses to three commands — install, `sensei init`, `sensei match` — narrate nothing unless something breaks.)
+(Peer mode: this whole phase compresses to four commands — install, `sensei init`, `git init`, `sensei match` — narrate nothing unless something breaks.)
 
 ## 1. Install the CLI (if `sensei` is missing)
 
@@ -21,13 +21,20 @@ Use the player's answer from the profile probe:
 - **Competitive-programming background** → `cpp` (the I/O is exactly the algo-problem style they know — `cin`/`cout`, no libraries).
 - Some other language they love → possible via the custom Dockerfile tier, but steer first-timers to the four templates; the custom path has no training wheels.
 
-## 3. Scaffold
+## 3. Scaffold + arm the habits
 
 ```sh
 sensei init --lang <choice>
+git init
+git add -A
+git commit -m "starter template, untouched"
 ```
 
-Creates `bot/` from the official starter template: a deliberately naive bot that reads the whole per-turn input but **keeps none of it**, then just steps in a direction without looking at the board (so it bumps walls and walks past food). Building a board from the input rows, then chasing food, is the first bot's job. The I/O is plain text — read a snapshot of what the ant sees each turn, print one command (`MOVE`/`MOVE_TO`/`PLANT`/`MERGE`/`WAIT`); no JSON, no libraries, the harness handles the wire protocol. Plus an `agent-arena.toml` manifest. The starter is short and readable on purpose — open it with the player, don't let it intimidate. `sensei init` is idempotent and refuses to overwrite an edited `bot/` — if the player wants to switch languages later, have them confirm explicitly.
+(Separate lines on purpose — `&&` chaining is a syntax error in Windows PowerShell 5.)
+
+`sensei init` creates `bot/` from the official starter: a deliberately naive bot that reads the whole per-turn input but **keeps none of it**, then steps in a direction without looking at the board. Building a board from the input, then chasing food, is the first bot's job — don't fix it now. `sensei init` is idempotent and refuses to overwrite an edited `bot/`.
+
+The `git init` matters more than it looks: **from here on, commit before every experiment, message = the hypothesis** ("greedy targeting should beat wandering"). In a later phase the player will hit a regression they can't explain, and the commit history becomes the debugging tool (`git bisect`) — that lesson only works if the habit starts now. Also create an empty `JOURNAL.md` at the repo root — one 3-line entry per kept change (*Change / Why + expected / Measured*) starts next phase.
 
 ## 4. Verify (the smoke test)
 
@@ -35,7 +42,7 @@ Creates `bot/` from the official starter template: a deliberately naive bot that
 sensei match --against random --seed 1
 ```
 
-If this completes, the whole chain works: toolchain → bot process → embedded referee → replay. Open the replay (`sensei replay latest`) **with the player watching** — seeing their ants move, even badly, is the hook. Don't lecture over it; ask what they notice. The ants wander right past food without ever eating — that gap *is* the first bot's job, and it makes a natural bridge into `.agents/01-first-bot.md`.
+If this completes, the whole chain works: toolchain → bot process → embedded referee → replay. Before opening the replay, get one prediction: *"what do you think your ant will do?"* Then `sensei replay latest` **with the player watching** — seeing their ants move, even badly, is the hook. Don't lecture over it; compare what happened to their prediction and ask what they notice. The ants wander right past food without eating — that gap *is* the first bot's job, and a natural bridge into `.agents/01-first-bot.md`.
 
 ## If it fails
 

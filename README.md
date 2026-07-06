@@ -76,7 +76,11 @@ Handy: `sensei doctor` checks your setup (language toolchains, editors, and whet
 |---|---|
 | [AGENTS.md](AGENTS.md) | The coaching protocol your AI agent reads to guide you. |
 | [.agents/](.agents/) | Step-by-step phase guides + the [game cheatsheet](.agents/game-cheatsheet.md). |
+| [.agents/skills/](.agents/skills/) | Coaching rituals (loss review, pre-submit gauntlet, boss postmortem) — cross-agent [skills](https://agentskills.io); mirrored in `.claude/skills/` for Claude Code. |
 | `bot/` | Your bot, created by `sensei init`. It stays on your machine — `sensei submit` uploads only the build artifact. |
+| `JOURNAL.md` | Your engineering log, one 3-line entry per kept change — your agent drafts it, you confirm it. |
+
+> **Effort stats (opt-in):** `sensei` can attach a self-reported "built with N tokens" summary to your submissions — aggregate token/model stats read from your agents' local logs, never conversation content. You'll be asked once at submit; `sensei stats show` prints the exact payload, `sensei stats disable` turns it off.
 
 ---
 

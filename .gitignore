@@ -6,3 +6,4 @@ target/
 dist/
 *.log
 .DS_Store
+bot-prev/

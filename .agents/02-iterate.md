@@ -1,28 +1,35 @@
 # Phase: Iterate & climb
 
-**Goal:** a repeatable improvement loop the player drives. This phase never "exits" — it's the game. Your job shifts from teacher to engineering partner.
+**Goal:** a repeatable improvement loop the *player* drives. This phase never "exits" — it's the game. Your role completes its arc here (mentor mode): if the profile's `arc` field doesn't already say so, **announce the flip** — *"from here, you write first and I review; I'll still pair on anything gnarly"* — and record it (`arc: player-writes, flip announced: yes`). Never re-announce what the profile says already happened.
 
-## The loop (make it a ritual)
+## The loop (make it a ritual — it's the curriculum)
 
-1. **Watch losses — on the player's screen, not just in your head.** Pull 2–3 lost replays from the ladder (or local self-play) and open them *with* the player (`sensei replay latest` / a specific seed); narrate the *pattern* as they watch, not after. Name the pattern, not the moment ("we lose food races on the right flank," not "turn 41 was bad"). Don't hand them a diagnosis you reached from a replay they never saw — show it (AGENTS.md → "Show the game, don't just narrate it").
-2. **One hypothesis, one change.** Smallest edit that addresses the pattern.
-3. **Measure:** `sensei match --against baseline --n 20 --json` *and* self-play vs the previous version — `sensei match --against <path-to-old-bot> --n 20`. Keep the old version around (suggest the player commit before each experiment; this is a good habit to model anyway).
-4. **Keep or revert based on the number, not the vibe.** Then submit when a change survives both gauntlets: `sensei submit`.
+1. **Losses first.** Pull 2–3 lost replays (ladder or local) and run the loss-review ritual — `.agents/skills/loss-review/SKILL.md` owns the steps. No bot edits before a named hypothesis; no diagnosis from a replay the player never saw.
+2. **One hypothesis, one change, one concept.** Commit first (message = the hypothesis).
+3. **Measure both gates:** `sensei match --against baseline --n 20 --json` *and* self-play vs the previous version (keep it runnable in-repo, e.g. `bot-prev/`, and pass its run command to `--against`).
+4. **Keep or revert on the number**, journal the result (3 lines: *Change / Why + expected / Measured*), and submit when a change survives both gates — via the gauntlet skill.
+
+Community-proven loop mechanics worth saying out loud once: keep the bot *always working* (small steps, never a big-bang rewrite mid-ladder); when a "smarter" 200-line rewrite drops the win rate, let the measurement deliver the lesson; rank ideas by expected impact over effort, not by how interesting they are; and when out of ideas, watch replays of the bots directly above you on the ladder — with notes.
 
 ## Strategy ladder (rough order of returns)
 
 - **Opening:** the first 30 turns decide the food split. Expand toward the *contested* middle food early; safe corner food will still be there later.
-- **Population arithmetic:** every trade is fine when ahead, bad when behind. `len(my_ants) - len(enemy_ants)` should gate aggression globally — every ant computes it from the same state, so the colony shifts mood together without communication.
-- **Shared sight is scouting:** the snapshot each ant gets is the *union* of every living ant's view (still fogged). Spreading ants apart widens what the whole colony perceives — a lone ant pushed toward the enemy half is a sensor, not just a soldier, and food a sibling spots becomes a target for ants that can't see it themselves.
-- **Levels & merge — power vs numbers:** `MERGE` fuses two ants into one of summed level; a higher-level ant eats lower-level enemies *without dying*. But the fused ant still counts as **one body** at turn 300, so blobbing trades your numeric edge for muscle. Use it to punch a chokepoint, bust a stalemate, or make an unkillable raider — not as a default. The **Genghis Ant** boss (`sensei match --against genghis`) is built on cheap level-2 raiders; watch its replays to feel the stack-vs-spread tension, then find the counter (spread out and win on count).
-- **Pheromones as shared memory:** stateless ants forget; the board doesn't. Ideas players discover here: plant type-1 on exhausted food zones ("don't bother"), type-2 as a rally/attack beacon, type-3 trail markers to suppress ant-mills. The *meaning* is yours — the engine assigns none. Remember the enemy reads them too: fake beacons are legal and delightful.
-- **Endgame clock:** at turn 300 the bigger colony wins. Ahead near the cap → stop fighting, scatter and survive. Behind → you *must* force trades or food. The turn number is in the state; use it.
-- **Counter-meta:** watch ladder replays of the bots directly above you and tune against what they actually do.
+- **Population arithmetic:** every trade is fine when ahead, bad when behind. `len(my_ants) - len(enemy_ants)` gates aggression globally — every ant computes it from the same board, so the colony shifts mood together without communication.
+- **Shared sight is scouting:** each ant's snapshot is the *union* of every living ant's view. Spreading widens what the colony perceives — a lone ant pushed toward the enemy half is a sensor, not just a soldier.
+- **Levels & merge — power vs numbers:** a higher-level ant eats lower-level enemies without dying, but the fused giant counts as **one body** at turn 300. Punch chokepoints and bust stalemates with it; don't default to it. Watch Genghis Ant's replays (`sensei match --against genghis`) to *feel* the stack-vs-spread tension, then find the counter.
+- **Pheromones as shared memory:** an ant's memory is private and dies with it; the board persists and every ant reads it. Type-1 on exhausted zones ("don't bother"), type-2 rally beacons, type-3 trail markers — the *meaning* is yours, the engine assigns none. The enemy reads them too: fake beacons are legal and delightful.
+- **Endgame clock:** ahead near turn 300 → scatter and survive; behind → force trades or food. The turn number is in the state; use it.
 
-## Teach the co-agent meta here (mentor mode — this is where it lands)
+Each rung that gets implemented follows the phase-1 pattern at whatever scaffold level the player is at now: named subgoals, the player writes the decision logic, explain-back first (that's what promotes the concept), your `Insight:` block after to fill gaps. Concepts they've gone fluent in need none of that — don't ritualize what's already theirs.
 
-The player is now doing real engineering. Make the habits explicit when they bite (peers: skip the framing, just practice these together):
-- Small diffs beat rewrites — a 200-line "smarter" rewrite that drops the win rate is the lesson, let it happen once.
-- Have the player explain *your* suggestion back before applying it; if they can't, simplify it.
-- Data over plausibility — "it should be better" loses to 20 matches that say it isn't.
-- Version everything — being able to fight your yesterday-self is the fastest progress signal on the platform.
+## The performance moment (when it arrives, not before)
+
+First timeout in `sensei log` — or the player wanting deeper search — is the **measure-before-optimize** lesson: time the subsystems (stderr timing prints per subgoal), find the one hot loop, fix only that, re-measure. The 50 ms per-ant deadline and the 1000 ms colony budget mean *many ants must be cheap ants* — a design constraint, not an annoyance. One pass of this beats any amount of speculative "optimization."
+
+## The regression moment (when it arrives)
+
+Rating dropped and nobody knows why → this is the `git bisect` payoff. The commit-per-experiment history plus a fixed-seed match as the test predicate finds the guilty change mechanically. Walk it once with the player; it retroactively justifies every "commit first" you've said.
+
+## Habits check (quiet, mentor mode)
+
+The player is now doing real engineering: small diffs, hypothesis commits, measured decisions, a journal that reads like an engineering log, review both ways (they explain your code back; you review theirs like a PR). Don't announce that you're teaching this — practice it until they do it unprompted, and note in the profile when they do.

@@ -21,7 +21,7 @@ Coach it as a discussion, not a spec. The upgrade has two halves — **keep** wh
 - **Chase the nearest `*`.** Find the closest food, go to it. Once the idea exists, name it: **greedy** — take the nearest, no long game. "Nearest" on a no-diagonals grid = **Manhattan distance**, `|Δx| + |Δy|` — one plain sentence each, then move on.
 - **Getting there is free:** `MOVE_TO x y` pathfinds one step per turn around walls. So the core is tiny: nearest `*` → `MOVE_TO`; no food in sight → keep the starter's wander as fallback.
 
-**Mentor mode — the player types the core.** Structure it as named subgoals and hand over a skeleton, not a solution:
+**The player types the core (both registers — this is the first code moment, so settle authorship here per the Teaching rules: ask who types, default to them).** Structure it as named subgoals and hand over a skeleton, not a solution:
 
 ```
 # subgoals: sense (parse + keep the grid) → pick target (nearest food) → act (MOVE_TO or fallback)
@@ -29,7 +29,7 @@ def pick_target(foods, me):
     # TODO(you): return the food with the smallest |dx|+|dy| from me
 ```
 
-You write the parsing boilerplate if they want; they write `pick_target`. Review what they wrote like a colleague's PR — praise what's right, question what's off, fill gaps only on request. This is the **modeling → coaching** part of the arc: you narrated the plan, they implement it. (First worked example can be fuller; by the next algorithm they get only the subgoal names; by mid-ladder they get a blank editor — that fading is deliberate, announce it as roles shift.)
+You write the parsing boilerplate if they want; they write `pick_target`. Review what they wrote like a colleague's PR — praise what's right, question what's off, fill gaps only on request. You narrate the plan, they implement it. (A fuller worked example from you is an *offer* — "want me to write this first one and narrate, then you take the next?" — never the unasked default; by the next algorithm they get only the subgoal names; by mid-ladder they get a blank editor. That fading is deliberate — announce it as roles shift, and record the agreed mode in the profile `arc`.)
 
 **Predict, run, compare.** Before the first run: "which number moves, and what will the replay look like?" The moment it works, watch the replay together — ants converging on food and spawning copies is the payoff shot, worth a genuine "look at that." Then the explain-back: *why* does greedy beat wandering, and when would greedy be the wrong call? A sound answer promotes `greedy targeting` to verified. This step usually flips the result against `random` decisively, and often clears the baseline too.
 

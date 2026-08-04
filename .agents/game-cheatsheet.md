@@ -4,7 +4,7 @@ Condensed from the full rules (docs/games/01b in the platform repo). The harness
 
 ## The game
 
-- 1v1, turn-based, ~300 turns, seeded symmetric grid (walls / food / empty). Each player starts with 1 ant.
+- 1v1, turn-based, ~200 turns, seeded symmetric 24x24 grid (walls / food / empty). Each player starts with 1 ant.
 - **Eat → duplicate:** ant ends a turn on food (uncontested, below the population cap, with an adjacent empty cell) → food is consumed, a child spawns next to it (acts next turn).
 - **Levels & merge:** every ant has a **level** (power, starts at 1). `MERGE` into an adjacent friendly ant to fuse — your levels **add** (level-2 + level-1 → one level-3 ant; you're consumed, so net ant count is unchanged).
 - **Collide → die:** when enemy ants meet (same cell, or swapping cells head-on) the **higher level wins and survives, keeping its level**; equal levels → all of them die. Food under a fight stays. So a level-3 ant walks through level-1s untouched.

@@ -1,6 +1,6 @@
 # Phase: Iterate & climb
 
-**Goal:** a repeatable improvement loop the *player* drives. This phase never "exits" — it's the game. Your role completes its arc here (mentor mode): if the profile's `arc` field doesn't already say so, **announce the flip** — *"from here, you write first and I review; I'll still pair on anything gnarly"* — and record it (`arc: player-writes, flip announced: yes`). Never re-announce what the profile says already happened.
+**Goal:** a repeatable improvement loop the *player* drives. This phase never "exits" — it's the game. The default arc is already `player-writes` (their choice at the first code moment); only if the profile shows a coach-led arc (`modeling` or `coaching` — the player asked you to drive earlier) does the arc complete here: **announce the flip** — *"from here, you write first and I review; I'll still pair on anything gnarly"* — and record it (`arc: player-writes, flip announced: yes`). Never re-announce what the profile says already happened, and never flip a player out of a mode they explicitly chose — offer, don't impose.
 
 ## The loop (make it a ritual — it's the curriculum)
 

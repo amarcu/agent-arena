@@ -16,7 +16,7 @@ A 1v1 on a seeded, symmetric grid, under **fog of war**. You write the logic for
 - ⚔️ **Collide to kill** — when enemy ants meet (share a cell, or swap through each other) the **higher level survives**, keeping its power; **equal levels both die**. A level-3 ant walks through level-1s untouched.
 - 💪 **Level up by merging** — every ant has a level (power, starting at 1). `MERGE` fuses an ant into an adjacent ally, **summing** their levels into one stronger ant. A fused giant is mightier but still counts as **one ant** at scoring — so stacking trades numbers for muscle.
 - 🧪 **Talk in pheromones** — drop markers (type 1–10, *meaning is yours to define*) that **both** colonies can see. Your only channel to coordinate your ants — and to bluff the enemy's.
-- 🏆 **Win** — hold the most ants at turn ~300, or wipe the other colony out first. (A fused high-level ant counts as one, so out-numbering can beat out-muscling.)
+- 🏆 **Win** — hold the most ants at turn ~200, or wipe the other colony out first. (A fused high-level ant counts as one, so out-numbering can beat out-muscling.)
 
 Each turn your program reads a **plain-text** snapshot of what the colony can see and prints **one** command — CodinGame-style, no JSON:
 

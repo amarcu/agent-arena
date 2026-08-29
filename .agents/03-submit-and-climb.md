@@ -10,7 +10,7 @@
 
 Every submission goes through the gauntlet — `.agents/skills/pre-submit-gauntlet/SKILL.md` owns the gates (a first submission skips only the self-play gate; there's nothing to self-play against yet).
 
-What happens after `submit`, so you can narrate it: local smoke test (catches "works here, breaks there" before upload) → tar + upload → server builds the official image (build log streams back; failures show here, not in ranked matches) → **bootstrap burst** of placement matches. The bot appears on the leaderboard once its rating uncertainty tightens — minutes, not instantly; `sensei status` tracks it. Rating starts conservative and *rises as it proves out* — say this up front so the first hour doesn't read as failure.
+What happens after `submit`, so you can narrate it: local smoke test (catches "works here, breaks there" before upload) → tar + upload → server builds the official image (build log streams back; failures show here, not in ranked matches) → **bootstrap burst** of placement matches. The bot appears on the leaderboard once its rating uncertainty tightens — minutes, not instantly; the ladder page has the rating. `sensei submit` ends with `ladder: submission <id> accepted` the moment the upload is accepted — with `  (phase boundary: read the new guide)` on the first submission ever — then one `ladder: submission <id> <status>` line per status the polling sees; it moves no local state (the state machine is local iteration only), but those lines are phase boundaries: say in one sentence what changed and what the new guide makes the next step, then read it. While `ladder.status` is `active`, `.agents/02-iterate.md` is the guide — any other status is only what we last saw, not a verdict: `queued`/`building` → the build was still running when we last looked, the ladder page has the result; `build_failed`/`smoke_failed` → it failed, fix it and re-submit. Say which, then route on `state`. Rating starts conservative and *rises as it proves out* — say this up front so the first hour doesn't read as failure.
 
 Each submission is a separate rated bot; the player's best live bot represents them. Submitting is cheap — encourage it whenever a change survives the gauntlet.
 
@@ -18,7 +18,7 @@ Each submission is a separate rated bot; the player's best live bot represents t
 
 - **Leagues & bosses:** Wood → Bronze → Silver (more coming). Promotion = beat the league's **boss** — Genghis Ant gates Wood, Sun Tz-ant gates Bronze. No demotion, ever. The matchmaker schedules boss challenges when the bot is ready; a lone new bot calibrates against its boss automatically.
 - **Bosses are exams:** each one punishes a specific weakness (Genghis: threat-blindness; Sun Tz-ant: bad trades). Every attempt — win or lose — gets the ritual in `.agents/skills/boss-postmortem/SKILL.md`: watch the boss's replay, 3-up/3-down postmortem into `JOURNAL.md`, and on a win the mastery check — the player explains the winning mechanism before the promotion "counts" as learning. Losing to a boss the first time is the intended experience.
-- Ladder losses are iteration fuel: `sensei status` lists recent matches; pull lost replays into the `.agents/02-iterate.md` loop.
+- Ladder losses are iteration fuel: the ladder page lists recent matches; pull lost replays into the `.agents/02-iterate.md` loop.
 
 ## Rules of play (the short honest version)
 

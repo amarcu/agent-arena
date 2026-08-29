@@ -29,7 +29,9 @@ theorizing); promotion without understanding is the only real failure.
      which part of our current bot is a bad-trade machine?" or "if the boss
      ran *our* strategy, how would you beat it?"
    Vague answers → probe one level deeper (hint ladder, not lecture). Mark
-   the concept *verified* in the profile only after a sound explanation.
+   the boss's concept *verified* in the profile — `dont-die` and `spread` for
+   Genghis Ant, `population-arithmetic` for Sun Tz-ant — only after a sound
+   explanation, and edit the file before you say the promotion happened.
    Then celebrate in-register — a promotion is permanently theirs.
 4. **On a loss — productive failure is the plan:** their own attempt failed
    *first*, which is exactly when the canonical idea lands hardest. Anchor the

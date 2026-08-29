@@ -1,6 +1,6 @@
 # Phase: First bot
 
-**Goal:** the player teaches their wandering ant to chase food, then beats the baseline bot — and understands every line that got them there. **Exit criteria:** ≥ 60% win rate over `sensei match --against baseline --n 20`, *and* the player has explained the greedy approach back in their own words (mark it verified in the profile).
+**Goal:** the player teaches their wandering ant to chase food, then beats the baseline bot — and understands every line that got them there. **Exit criteria:** ≥ 60% win rate over `sensei match --against baseline --n 20`, *and* the player has explained the greedy approach back in their own words (`greedy: verified` in the profile).
 
 > First, make sure they've actually *seen* the game — rules at their level, a match watched together. Coding before they understand what wins is the mistake this phase exists to avoid. Returning or peer players who know the game: skip ahead.
 
@@ -9,9 +9,9 @@
 Before strategy, verify the player can trace **one full turn** of the machine their code lives in: the harness writes a text snapshot to stdin (their ant's position, the visible grid, nearby ants) → their program computes → prints exactly one command to stdout → the engine resolves everyone's commands in a fixed order (merge → move → combat → feed → pheromones). Two facts trip everyone and are worth stating plainly:
 
 - **You write one ant, not a colony.** Every ant runs this same program independently; "my ants" emerge from one ant's logic being good.
-- **Each process is one ant's lifetime.** Memory persists turn-to-turn for *that ant*, but there is no colony-wide variable — the board (and pheromones) is the only shared state.
+- **Each process is one ant's lifetime** (`per-ant-memory`). Memory persists turn-to-turn for *that ant*, but there is no colony-wide variable — the board (and pheromones) is the only shared state.
 
-Check it lands with one question — "so if you set a variable this turn, which ants see it next turn?" — and re-anchor every later bug explanation in this model. Then tour the starter in `bot/` (it's short on purpose): a read-then-print loop that currently reads the whole snapshot and **keeps none of it**. Ideally the player names the gap themselves (*"what's it not doing with all that input?"*).
+Check it lands with one question — "so if you set a variable this turn, which ants see it next turn?" — a right answer is `per-ant-memory: verified` in the profile — and re-anchor every later bug explanation in this model. Then tour the starter in `bot/` (it's short on purpose): a read-then-print loop that currently reads the whole snapshot and **keeps none of it**. Ideally the player names the gap themselves (*"what's it not doing with all that input?"*).
 
 ## 2. First upgrade: chase the food
 
@@ -31,14 +31,14 @@ def pick_target(foods, me):
 
 You write the parsing boilerplate if they want; they write `pick_target`. Review what they wrote like a colleague's PR — praise what's right, question what's off, fill gaps only on request. You narrate the plan, they implement it. (A fuller worked example from you is an *offer* — "want me to write this first one and narrate, then you take the next?" — never the unasked default; by the next algorithm they get only the subgoal names; by mid-ladder they get a blank editor. That fading is deliberate — announce it as roles shift, and record the agreed mode in the profile `arc`.)
 
-**Predict, run, compare.** Before the first run: "which number moves, and what will the replay look like?" The moment it works, watch the replay together — ants converging on food and spawning copies is the payoff shot, worth a genuine "look at that." Then the explain-back: *why* does greedy beat wandering, and when would greedy be the wrong call? A sound answer promotes `greedy targeting` to verified. This step usually flips the result against `random` decisively, and often clears the baseline too.
+**Predict, run, compare.** Before the first run: "which number moves, and what will the replay look like?" The moment it works, watch the replay together — ants converging on food and spawning copies is the payoff shot, worth a genuine "look at that." Then the explain-back: *why* does greedy beat wandering, and when would greedy be the wrong call? A sound answer promotes `greedy` to verified. This step usually flips the result against `random` decisively, and often clears the baseline too.
 
 ## 3. The improvement ladder (reach for a rung when the losses point at it)
 
 Don't front-load these — watch a lost replay together first (the loss-review ritual in `.agents/skills/loss-review/SKILL.md`), name the pattern, then pick the rung that addresses it. One concept per iteration.
 
-1. **Don't die:** never step onto a cell an enemy could also reach this turn. Trading one-for-one is fine *only* when ahead on ants.
-2. **Spread out:** every ant chasing the same food wastes turns. No memory needed — rank ants by distance to each food; the closest claims it, others take their next-best. Every ant computes the same ranking from the same board, so they agree without communicating.
+1. **Don't die** (`dont-die`): never step onto a cell an enemy could also reach this turn. Trading one-for-one is fine *only* when ahead on ants.
+2. **Spread out** (`spread`): every ant chasing the same food wastes turns. No memory needed — rank ants by distance to each food; the closest claims it, others take their next-best. Every ant computes the same ranking from the same board, so they agree without communicating.
 3. **Don't block friends:** the engine cancels same-player move conflicts — two ants wanting one cell both stall. The spread-out logic mostly fixes this free.
 
 Greedy + don't-die usually clears the 60% bar.
